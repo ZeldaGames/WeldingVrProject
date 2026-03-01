@@ -1,49 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem; // VR input ke liye
 
 public class RightHandcontrol : MonoBehaviour
 {
-    private DragImage dragImage;
-    internal WeldingHandle weldingHandle;
+    public WeldingHandle weldingHandle; // Torch ki main script
+    public InputActionProperty triggerAction; // VR Trigger button
 
-    public bool HasInteracted()
-    {
-        return dragImage.hasInteracted;
-    }
-    public bool IsInteracting()
-    {
-        return dragImage.isInteracting;
-    }
+    [HideInInspector] public bool hasInteracted = false;
 
-    public bool IsOn()
-    {
-        return dragImage.isWelderOn;
-    }
-
-    private void Awake()
-    {
-        dragImage = GetComponent<DragImage>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // 1. VR Trigger ki value check karna (0 se 1 tak)
+        float triggerValue = triggerAction.action.ReadValue<float>();
 
-        if (dragImage.isInteracting && dragImage.isWelderOn)
+        // 2. Agar trigger 10% se zyada daba ho to welding shuru
+        if (triggerValue > 0.1f)
         {
-            weldingHandle.StartWelding();
+            if (weldingHandle != null)
+            {
+                hasInteracted = true;
+                weldingHandle.StartWelding();
+                Debug.Log("Welding Starting...");
+            }
         }
         else
         {
-            weldingHandle.StopWelding();
+            if (weldingHandle != null)
+            {
+                weldingHandle.StopWelding();
+            }
         }
 
+        // 3. Tip ki position update karna taakay sparks sahi jagah se nikalain
+        if (weldingHandle != null)
+        {
+            weldingHandle.GetWeldPoint();
+        }
     }
 }
