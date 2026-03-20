@@ -29,8 +29,8 @@ public class ScorePanel : MonoBehaviour
 
         this.gameObject.SetActive(true);
 
-        LeanTween.scale(gameObject, Vector3.one, 0.3f);
-        LeanTween.alpha(gameObject.GetComponent<RectTransform>(), 1, 0.3f);
+        //LeanTween.scale(gameObject, Vector3.one, 0.3f);
+        //LeanTween.alpha(gameObject.GetComponent<RectTransform>(), 1, 0.3f);
 
         scoreText.text = uniformityStr + coverageStr + speedStr + spacerStr + totalStr;
 
@@ -38,8 +38,8 @@ public class ScorePanel : MonoBehaviour
 
     internal void AnimationSetup()
     {
-        gameObject.transform.localScale = Vector3.one * 0.8f;
-        LeanTween.alpha(gameObject.GetComponent<RectTransform>(), 0, 0.01f);
+        //gameObject.transform.localScale = new Vector3(0.2938535f, 0.2938535f, 0.2938535f);/*Vector3.one * 0.8f*/;
+        LeanTween.alpha(gameObject.GetComponent<RectTransform>(), 1, 0.01f);
     }
 
 }
