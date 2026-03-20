@@ -11,8 +11,8 @@ public class UIcontrols : MonoBehaviour
 
     [Header("VR Mode Toggle Setup")]
     [SerializeField] private Transform rightControllerTransform;
-    [SerializeField] private GameObject controllerVisual; // Controller ka mesh
-    [SerializeField] private GameObject handVisual;       // Hath ka mesh
+    [SerializeField] private GameObject controllerVisual; 
+    [SerializeField] private GameObject handVisual;       
     [SerializeField] private InputActionProperty activateAction;   // Trigger
     [SerializeField] private InputActionProperty toggleModeAction; // Button (A/X) for Toggle
 
@@ -27,6 +27,9 @@ public class UIcontrols : MonoBehaviour
     private bool startGame = false;
     private bool isHandMode = false; // Toggle state
     public enum WeldingType { Mig, Tig };
+
+    [Header("Laser Visuals")]
+    [SerializeField] private GameObject laserLine; 
 
     private void Awake()
     {
@@ -57,6 +60,18 @@ public class UIcontrols : MonoBehaviour
 
         if (startGame)
         {
+            float triggerValue = activateAction.action.ReadValue<float>();
+
+            // AGAR welding ho rahi hai (Trigger dabaya hai) 
+            // YA phir torch panel ke bilkul paas hai
+            if (triggerValue > 0.1f || welderHandle.isWeldingLayer)
+            {
+                if (laserLine != null) laserLine.SetActive(false); 
+            }
+            else
+            {
+                if (laserLine != null) laserLine.SetActive(true); 
+            }
             // 2. Torch Movement based on Mode
             if (isHandMode)
             {
@@ -70,7 +85,7 @@ public class UIcontrols : MonoBehaviour
             }
 
             // 3. Welding Trigger Logic
-            float triggerValue = activateAction.action.ReadValue<float>();
+            triggerValue = activateAction.action.ReadValue<float>();
             if (triggerValue > 0.1f)
                 welderHandle.StartWelding();
             else

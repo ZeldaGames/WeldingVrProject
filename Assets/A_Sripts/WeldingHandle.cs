@@ -20,7 +20,7 @@ public class WeldingHandle : MonoBehaviour
     }
 
     private RaycastHit weldHit;
-    bool isWeldingLayer = false;
+    public bool isWeldingLayer = false;
     private float weldTimer;
     private float travelTimer;
     public void StartWelding()
@@ -31,7 +31,7 @@ public class WeldingHandle : MonoBehaviour
         weldTimer += Time.deltaTime;
         Debug.Log("StartWelding " + isWeldingLayer);
         //Delay start
-        if (weldTimer >= 1f)
+        if (weldTimer >= 0.5f)
         {
             if (isWeldingLayer)
             {
@@ -235,9 +235,12 @@ public class WeldingHandle : MonoBehaviour
 
     public Vector3 GetWeldPoint()
     {
+
+
         Vector3 weldPoint = weldingTip.position;
 
-        float rayLength = 5f;
+
+        float rayLength = 0.05f;
         if (Physics.Raycast(weldingTip.position, weldingTip.forward, out RaycastHit hit, rayLength))
         {
 
