@@ -31,7 +31,7 @@ public class WeldingHandle : MonoBehaviour
         weldTimer += Time.deltaTime;
         Debug.Log("StartWelding " + isWeldingLayer);
         //Delay start
-        if (weldTimer >= 0.5f)
+        if (weldTimer >= 1f)
         {
             if (isWeldingLayer)
             {

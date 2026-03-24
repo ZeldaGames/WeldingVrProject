@@ -120,6 +120,12 @@ public class UIcontrols : MonoBehaviour
         RemoveAllWeldBlobs();
         scorePanel.SetActive(false);
         scoreSys.ResetPanel();
+
+   
+
+
+
+        ShowWeldingControls(true);
     }
 
     public void DoneButton()
